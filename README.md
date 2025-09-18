@@ -45,10 +45,14 @@ A aplicação permite comunicação instantânea entre clientes e o servidor, ga
 
 ## 🏗️ Arquitetura: MVC
 
-##Demonstração
-!
+##Demonstração##
+<img width="1366" height="768" alt="Login" src="https://github.com/user-attachments/assets/7e60e721-10f5-436f-9e5a-97af81521416" />
+<img width="1366" height="768" alt="Captura de Ecrã (402)" src="https://github.com/user-attachments/assets/5cd7cdc8-643a-4301-8c88-dfb3fbd75954" />
+<img width="1366" height="768" alt="Captura de Ecrã (401)" src="https://github.com/user-attachments/assets/e6ff7940-fe20-47cf-9935-f0c51c0322cc" />
+<img width="1366" height="768" alt="Captura de Ecrã (403)" src="https://github.com/user-attachments/assets/06c6570d-7198-4674-99d4-183baa5ae71d" />
 
-##👨‍💻 Autor
+
+##👨‍💻 Autor##
 Omar Davide Xavier
 🎓 Estudante Finalista de Engenharia Informática
 📍 Moçambique
