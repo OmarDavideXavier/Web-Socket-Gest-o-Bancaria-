@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Dashboard</title>
+    <link rel="stylesheet" href="dashboard-styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Sistema Bancário</h1>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div id="notification-icon" class="notification-icon">
+                    <img src="./assets/bell.png" width="24" height="24" alt="notification icon"><span id="notification-count" class="notification-count">0</span>
+                </div>
+                <div id="notification-box" class="notification-box">
+                    <h3>Notificações</h3>
+                    <ul id="notification-list"></ul>
+                </div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </header>
+        
+        <div class="account-info">
+            <h2>Informações da Conta</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label">Cliente:</span>
+                    <span class="value" id="clientName">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Número da Conta:</span>
+                    <span class="value" id="accountNumber">-</span>
+                </div>
+                <!-- <div class="info-item">
+                    <span class="label">Tipo de Conta:</span>
+                    <span class="value" id="accountType">-</span>
+                </div> -->
+                <div class="info-item">
+                    <span class="label">Saldo Atual:</span>
+                    <span class="value balance" id="currentBalance">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="operations-section">
+            <h2>Operações Bancárias</h2>
+            <div class="operations-grid">
+                <div class="operation-card">
+                    <h3>Depositar</h3>
+                    <input type="number" id="depositAmount" placeholder="Valor" step="0.01" min="0.01">
+                    <button onclick="deposit()">Depositar</button>
+                </div>
+                
+                <div class="operation-card">
+                    <h3>Levantar</h3>
+                    <input type="number" id="withdrawAmount" placeholder="Valor" step="0.01" min="0.01">
+                    <button onclick="withdraw()">Levantar</button>
+                </div>
+                
+                <div class="operation-card">
+                    <h3>Transferir</h3>
+                    <input type="text" id="transferAccount" placeholder="Conta destino">
+                    <input type="number" id="transferAmount" placeholder="Valor" step="0.01" min="0.01">
+                    <button onclick="transfer()">Transferir</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="transactions-section">
+            <div class="transactions-header">
+                <h2>Histórico de Transações</h2>
+                <button onclick="printStatement()" class="print-btn">Imprimir Extrato</button>
+            </div>
+            <div class="transactions-list" id="transactionsList">
+                <p class="no-transactions">Nenhuma transação realizada</p>
+            </div>
+        </div>
+        
+        <div class="message" id="message" style="display: none;"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    <script src="dashboard-script-socket.js"></script>
+    <!-- <script type="module" src="socket.js"></script> -->
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo Bancário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        
+        /* Premium animations */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .animate-slide-up { animation: slideInUp 0.6s ease-out; }
+        .animate-fade-scale { animation: fadeInScale 0.4s ease-out; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        .status-indicator {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .status-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+    </style>
+</head>
+<body class="">
+    <header class="gradient-bg shadow-2xl">
+        <div class="max-w-7xl mx-auto px-6 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                        <i class="fas fa-university text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">Painel Administrativo</h1>
+                        <p class="text-cyan-100 text-sm">Sistema Bancário</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-all duration-300">
+                        <i class="fas fa-bell text-white"></i>
+                    </button>
+                    <!-- <button onclick="logout()" class="bg-red-500/90 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-white/80 backdrop-blur-sm border-b border-cyan-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex space-x-8">
+                <button onclick="showSection('dashboard')" id="dashboard-btn" class="nav-btn active px-6 py-4 text-sm font-semibold border-b-2 border-transparent hover:border-cyan-500 transition-all duration-300">
+                    <i class="fas fa-chart-line mr-2"></i>Dashboard
+                </button>
+                <button onclick="showSection('clients')" id="clients-btn" class="nav-btn px-6 py-4 text-sm font-semibold border-b-2 border-transparent hover:border-cyan-500 transition-all duration-300">
+                    <i class="fas fa-users mr-2"></i>Clientes
+                </button>
+                <button onclick="showSection('accounts')" id="accounts-btn" class="nav-btn px-6 py-4 text-sm font-semibold border-b-2 border-transparent hover:border-cyan-500 transition-all duration-300">
+                    <i class="fas fa-credit-card mr-2"></i>Contas
+                </button>
+
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <section id="dashboard-section" class="section active animate-slide-up">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-cyan-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total Clientes</p>
+                            <p class="text-3xl font-bold text-gray-900" id="total-clients">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-users text-white text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-emerald-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total Contas</p>
+                            <p class="text-3xl font-bold text-gray-900" id="total-accounts">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-credit-card text-white text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Saldo Total</p>
+                            <p class="text-3xl font-bold text-gray-900" id="total-balance">0.00MZN</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-euro-sign text-white text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-purple-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Transações Hoje</p>
+                            <p class="text-3xl font-bold text-gray-900" id="today-transactions">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-exchange-alt text-white text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-gray-900">Atividade Recente</h3>
+                    <button class="text-cyan-600 hover:text-cyan-700 font-medium text-sm">Ver Tudo</button>
+                </div>
+                <div id="recent-activity" class="space-y-4">
+                </div>
+            </div>
+        </section>
+        <section id="clients-section" class="section hidden">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">Gestão de Clientes</h2>
+                <button onclick="showModal('register-client')" class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-plus mr-2"></i>Registrar Cliente
+                </button>
+            </div>
+            <div class="mb-6">
+                <div class="relative">
+                    <input type="text" id="client-search" placeholder="Pesquisar clientes..." 
+                           onkeyup="searchClients()" 
+                           class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent shadow-sm">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            <div id="clients-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+        </section>
+
+        <section id="accounts-section" class="section hidden">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">Gestão de Contas</h2>
+                <button onclick="showModal('create-account')" class="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-plus mr-2"></i>Criar Conta
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <div class="relative">
+                    <input type="text" id="account-search" placeholder="Pesquisar contas..." 
+                           onkeyup="searchAccounts()" 
+                           class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div id="accounts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+        </section>
+
+        
+    </main>
+    <div id="register-client-modal" class="modal fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-auto">
+            <div class="modal-header flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900">Registrar Novo Cliente</h3>
+                <button onclick="closeModal('register-client')" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            
+            <form id="register-client-form" class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-group">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo</label>
+                        <input type="text" id="client-name" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                        <input type="email" id="client-email" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Número do Documento de Identidade</label>
+                        <input type="text" id="client-document" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Número de Telefone</label>
+                        <input type="tel" id="client-contact" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200">
+                    <button type="button" onclick="closeModal('register-client')" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-all duration-300">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl hover:from-cyan-700 hover:to-blue-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                        Registrar Cliente
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="create-account-modal" class="modal fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl max-w-lg mx-auto mt-20 animate-fade-scale">
+            <div class="modal-header flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900">Criar Nova Conta</h3>
+                <button onclick="closeModal('create-account')" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            
+            <form id="create-account-form" class="p-6">
+                <div class="space-y-6">
+                    <div class="form-group">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Cliente</label>
+                        <select id="account-client" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                            <option value="">Selecione um cliente...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Tipo de Conta</label>
+                        <select id="account-type" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                            <option value="">Selecione o tipo...</option>
+                            <option value="Corrente">Conta Corrente</option>
+                            <option value="Poupança">Conta Poupança</option>
+                            <option value="Empresarial">Conta Empresarial</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Depósito Inicial (€)</label>
+                        <input type="number" id="initial-deposit" min="0" step="0.01" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200">
+                    <button type="button" onclick="closeModal('create-account')" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-all duration-300">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-xl hover:from-emerald-700 hover:to-green-700 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                        Criar Conta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="client-details-modal" class="modal fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl max-w-4xl mx-auto mt-10 animate-fade-scale">
+            <div class="modal-header flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900">Detalhes do Cliente</h3>
+                <button onclick="closeModal('client-details')" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div id="client-details-content" class="p-6">
+                 Content will be populated by JavaScript 
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

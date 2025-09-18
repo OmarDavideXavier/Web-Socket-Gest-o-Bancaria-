@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Login</title>
+    <link rel="stylesheet" href="login-styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="header">
+                <h1>Sistema Bancário</h1>
+                <p>Insira o número da sua conta para aceder</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="accountNumber">Número da Conta</label>
+                    <input type="text" id="accountNumber" placeholder="Ex: 12345" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Aceder à Conta</button>
+            </form>
+            
+            <div class="error-message" id="errorMessage" style="display: none;">
+                Número de conta inválido. Tente novamente.
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    <script src="login-script-sockets.js"></script>
+</body>
+</html>
